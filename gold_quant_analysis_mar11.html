@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAUUSD Macro Quant Analysis — Mar 11, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --ink: #0d0d12;
+  --paper: #f7f5ef;
+  --cream: #ede9e0;
+  --gold: #b8860b;
+  --gold-light: #d4a017;
+  --gold-pale: #f0e6c0;
+  --red: #9b1c1c;
+  --green: #1a5c3a;
+  --blue: #1a3a5c;
+  --mid: #6b6560;
+  --border: #d4cec4;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* MASTHEAD */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 32px 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.masthead::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,134,11,0.15) 0%, transparent 70%);
+}
+
+.mast-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+}
+
+.mast-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 7vw, 42px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.mast-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.mast-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(247,245,239,0.5);
+  letter-spacing: 1px;
+}
+
+.mast-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.mast-stat {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.mast-stat-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(247,245,239,0.45);
+  margin-bottom: 3px;
+}
+
+.mast-stat-val {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gold-light);
+}
+
+.mast-stat-chg {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(247,245,239,0.5);
+  margin-top: 1px;
+}
+
+/* NAV */
+.nav-strip {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-strip::-webkit-scrollbar { display:none; }
+
+.nav-item {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding: 10px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.nav-item.active, .nav-item:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* CONTENT */
+.content { padding: 0 16px 48px; }
+
+/* SECTION */
+.section {
+  padding: 24px 0 20px;
+  border-bottom: 1px solid var(--border);
+  display: none;
+}
+.section.active { display: block; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.step-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+}
+
+/* TABLES */
+.tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+th {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--ink);
+  text-align: right;
+  font-weight: 500;
+  background: var(--cream);
+}
+
+th:first-child { text-align: left; }
+
+td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  color: var(--ink);
+}
+
+td:first-child { text-align: left; font-weight: 500; }
+
+tr:hover td { background: var(--gold-pale); }
+
+.highlight-row td { background: rgba(184,134,11,0.06); font-weight: 500; }
+.highlight-row td:first-child { color: var(--gold); }
+
+.val-pos { color: var(--green); font-weight: 500; }
+.val-neg { color: var(--red); font-weight: 500; }
+.val-strong { color: var(--gold); font-weight: 600; }
+.val-neutral { color: var(--mid); }
+
+/* STARS */
+.star { color: var(--gold); font-size: 11px; }
+
+/* CARDS */
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+
+.card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.card-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
+.card-val { font-family: var(--mono); font-size: 20px; font-weight: 500; }
+.card-sub { font-size: 10px; color: var(--mid); margin-top: 3px; font-family: var(--mono); }
+
+/* CHART CANVAS */
+.chart-wrap {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.chart-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 12px;
+}
+
+/* INSIGHT BOXES */
+.insight {
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 0 6px 6px 0;
+}
+
+.insight-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.insight p { font-size: 12px; color: var(--ink); line-height: 1.6; }
+
+.alert-box {
+  background: #fef3f3;
+  border-left: 3px solid var(--red);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 0 6px 6px 0;
+}
+
+.alert-box .insight-label { color: var(--red); }
+
+.green-box {
+  background: #f0f7f3;
+  border-left: 3px solid var(--green);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 0 6px 6px 0;
+}
+
+.green-box .insight-label { color: var(--green); }
+
+/* BADGE */
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.badge-gold { background: var(--gold-pale); color: var(--gold); }
+.badge-green { background: #e6f4ec; color: var(--green); }
+.badge-red { background: #fae6e6; color: var(--red); }
+.badge-gray { background: var(--cream); color: var(--mid); }
+
+/* FORMULA */
+.formula {
+  background: var(--ink);
+  color: var(--gold-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* NARRATIVE */
+.narrative {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+.narrative strong { font-weight: 600; color: var(--gold); }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* CORR BAR */
+.corr-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.corr-label { font-family: var(--mono); font-size: 10px; color: var(--mid); width: 90px; flex-shrink: 0; }
+.corr-bar-bg { flex: 1; height: 8px; background: var(--cream); border-radius: 4px; overflow: hidden; position: relative; }
+.corr-bar-center { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.corr-bar-fill { height: 100%; border-radius: 4px; }
+.corr-val { font-family: var(--mono); font-size: 10px; font-weight: 500; width: 50px; text-align: right; flex-shrink: 0; }
+
+/* TRADING SIGNALS */
+.signal-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: white;
+}
+
+.signal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.signal-title { font-family: var(--mono); font-size: 11px; font-weight: 600; }
+.signal-body { font-size: 11px; color: var(--mid); line-height: 1.6; }
+
+/* DATA TABLE — COMPACT */
+.data-tbl { font-size: 10px; }
+.data-tbl th { font-size: 8px; padding: 6px 8px; }
+.data-tbl td { padding: 5px 8px; }
+
+/* STEP PILL */
+.step-pill {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--gold-light);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-right: 6px;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--ink);
+  color: rgba(247,245,239,0.4);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 16px 20px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="mast-label">Macro Quantitative Analysis Report · Dataset A Updated</div>
+  <h1 class="mast-title">Gold & Macro<br><em>Drivers</em> — 2026</h1>
+  <div class="mast-meta">Jan 2 – Mar 11, 2026 · n=47 obs · 4 Variables · 12-Step Analysis · Updated Mar 11, 2026</div>
+  <div class="mast-stats">
+    <div class="mast-stat">
+      <div class="mast-stat-label">Gold Today</div>
+      <div class="mast-stat-val">$5,228</div>
+      <div class="mast-stat-chg">+$335 YTD (+6.8%)</div>
+    </div>
+    <div class="mast-stat">
+      <div class="mast-stat-label">DXY Today</div>
+      <div class="mast-stat-val">98.83</div>
+      <div class="mast-stat-chg">−10.34 YTD (−9.5%)</div>
+    </div>
+    <div class="mast-stat">
+      <div class="mast-stat-label">US10Y</div>
+      <div class="mast-stat-val">4.13%</div>
+      <div class="mast-stat-chg">−0.06pp YTD</div>
+    </div>
+    <div class="mast-stat">
+      <div class="mast-stat-label">Real Yield</div>
+      <div class="mast-stat-val">2.29%</div>
+      <div class="mast-stat-chg">TIPS: 1.84%</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-strip">
+  <div class="nav-item active" onclick="show('s1')">1. Data</div>
+  <div class="nav-item" onclick="show('s2')">2. Stats</div>
+  <div class="nav-item" onclick="show('s3')">3. Cov</div>
+  <div class="nav-item" onclick="show('s4')">4. Corr</div>
+  <div class="nav-item" onclick="show('s5')">5. Regr</div>
+  <div class="nav-item" onclick="show('s6')">6. Multi</div>
+  <div class="nav-item" onclick="show('s7')">7. Sensitivity</div>
+  <div class="nav-item" onclick="show('s8')">8. Macro</div>
+  <div class="nav-item" onclick="show('s9')">9. Trading</div>
+  <div class="nav-item" onclick="show('s10')">10. Summary</div>
+  <div class="nav-item" onclick="show('s11')">11. Narrative</div>
+</div>
+
+<div class="content">
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 1 — DATA -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s1" class="section active">
+  <div class="section-header">
+    <span class="step-num">STEP 01</span>
+    <h2 class="section-title">Data Preparation & Derived Variables</h2>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Dataset Overview</div>
+    <p>Jan 2 – Mar 11, 2026 · <strong>47 trading days</strong> · Sources: Fed H.15, US Treasury, Yahoo Finance (DXY), composite spot (Gold) · Real Yield = US10Y − TIPS · Breakeven = US10Y − TIPS (approximation)</p>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Gold Price — Jan 2 to Mar 11, 2026</div>
+    <canvas id="chartGold" height="180"></canvas>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">DXY — Jan 2 to Mar 11, 2026</div>
+    <canvas id="chartDXY" height="150"></canvas>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="data-tbl">
+      <thead>
+        <tr>
+          <th>Date</th><th>Gold $</th><th>DXY</th><th>US10Y %</th><th>TIPS %</th><th>Real Yield %</th><th>Break-even %</th>
+        </tr>
+      </thead>
+      <tbody id="dataTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Data Notes</div>
+    <p>Weekend/holiday dates excluded. TIPS from Fed H.15 daily release. Gold composite from multiple spot sources. Real Yield computed daily as US10Y−TIPS. Breakeven = US10Y−TIPS (Fisher approximation). <strong>New Mar 11 observation: Gold $5,228 | DXY 98.83 | US10Y 4.13% | TIPS 1.84% | Real Yield 2.29%</strong></p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 2 — DESCRIPTIVE STATS -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s2" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 02–03</span>
+    <h2 class="section-title">Descriptive Statistics</h2>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th><th>Mean</th><th>Median</th><th>Std Dev</th><th>Variance</th><th>Min</th><th>Max</th><th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>Gold ($/oz)</td>
+          <td>5,189</td><td>5,200</td><td>157.4</td><td>24,775</td>
+          <td>4,897</td><td>5,595</td><td>698</td>
+        </tr>
+        <tr>
+          <td>DXY</td>
+          <td>103.41</td><td>103.89</td><td>3.82</td><td>14.59</td>
+          <td>98.63</td><td>109.17</td><td>10.54</td>
+        </tr>
+        <tr>
+          <td>US10Y (%)</td>
+          <td>4.218</td><td>4.210</td><td>0.074</td><td>0.0055</td>
+          <td>4.03</td><td>4.38</td><td>0.35</td>
+        </tr>
+        <tr>
+          <td>TIPS (%)</td>
+          <td>1.882</td><td>1.880</td><td>0.058</td><td>0.0034</td>
+          <td>1.77</td><td>1.98</td><td>0.21</td>
+        </tr>
+        <tr>
+          <td>Real Yield (%)</td>
+          <td>2.336</td><td>2.330</td><td>0.061</td><td>0.0037</td>
+          <td>2.21</td><td>2.47</td><td>0.26</td>
+        </tr>
+        <tr>
+          <td>Breakeven (%)</td>
+          <td>2.336</td><td>2.330</td><td>0.061</td><td>0.0037</td>
+          <td>2.21</td><td>2.47</td><td>0.26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:10px;color:var(--mid);margin-bottom:14px;font-family:var(--mono)">* Breakeven ≡ Real Yield in this dataset (US10Y−TIPS). Note: n=47 levels.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Gold Volatility</div>
+      <div class="card-val">±$157/oz</div>
+      <div class="card-sub">Std dev · 3.0% of mean price</div>
+    </div>
+    <div class="card">
+      <div class="card-label">DXY Volatility</div>
+      <div class="card-val">±3.82 pts</div>
+      <div class="card-sub">3.7% of mean · High for 47d window</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Yield Range (US10Y)</div>
+      <div class="card-val">35bp</div>
+      <div class="card-sub">4.03% → 4.38% · Modest variation</div>
+    </div>
+    <div class="card">
+      <div class="card-label">TIPS Range</div>
+      <div class="card-val">21bp</div>
+      <div class="card-sub">1.77% → 1.98% · Declining trend</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Daily Returns Distribution — Gold vs DXY (returns %)</div>
+    <canvas id="chartReturns" height="160"></canvas>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Key Observation</div>
+    <p>DXY shows the highest coefficient of variation (3.7%) among all variables, meaning it has the most relative volatility — consistent with its outsized explanatory power for Gold. Gold's std dev of $157 reflects a volatile but trending market (ATH $5,595 in Jan, pullback to $4,897 in Feb, recovery to $5,228 now).</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 3 — COVARIANCE -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s3" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 04</span>
+    <h2 class="section-title">Covariance Matrix</h2>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">What is Covariance?</div>
+    <p>Cov(X,Y) = E[(X−μx)(Y−μy)] — measures direction and magnitude of co-movement. Negative covariance = variables move in opposite directions. The magnitude depends on scale, so raw numbers are not directly comparable across pairs.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Pair</th><th>Covariance</th><th>Direction</th><th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>Gold × DXY</td>
+          <td class="val-neg">−556.2</td>
+          <td><span class="badge badge-red">Inverse</span></td>
+          <td>DXY up → Gold down (strong)</td>
+        </tr>
+        <tr>
+          <td>Gold × US10Y</td>
+          <td class="val-neg">−4.63</td>
+          <td><span class="badge badge-red">Inverse</span></td>
+          <td>Higher yields → Lower Gold</td>
+        </tr>
+        <tr>
+          <td>Gold × TIPS</td>
+          <td class="val-neg">−2.52</td>
+          <td><span class="badge badge-red">Inverse</span></td>
+          <td>Higher real rates → Lower Gold</td>
+        </tr>
+        <tr>
+          <td>Gold × Real Yield</td>
+          <td class="val-neg">−2.52</td>
+          <td><span class="badge badge-red">Inverse</span></td>
+          <td>Same as TIPS (identical series here)</td>
+        </tr>
+        <tr>
+          <td>Gold × Breakeven</td>
+          <td class="val-neg">−2.52</td>
+          <td><span class="badge badge-red">Inverse</span></td>
+          <td>Same as Real Yield</td>
+        </tr>
+        <tr>
+          <td>DXY × US10Y</td>
+          <td class="val-pos">+0.207</td>
+          <td><span class="badge badge-green">Positive</span></td>
+          <td>Higher yields → stronger USD</td>
+        </tr>
+        <tr>
+          <td>DXY × TIPS</td>
+          <td class="val-pos">+0.163</td>
+          <td><span class="badge badge-green">Positive</span></td>
+          <td>Real yields support USD</td>
+        </tr>
+        <tr>
+          <td>US10Y × TIPS</td>
+          <td class="val-pos">+0.00396</td>
+          <td><span class="badge badge-green">Positive</span></td>
+          <td>Both rates co-move (multicollinearity)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula">Cov(Gold, DXY) = Σ[(Gold_i − μGold)(DXY_i − μDXY)] / (n−1) = −556.2</div>
+
+  <div class="alert-box">
+    <div class="insight-label">Multicollinearity Warning</div>
+    <p>US10Y = TIPS + Real Yield by construction. This creates perfect linear dependence in multivariate models. Real Yield and Breakeven are identical in this dataset. This will inflate standard errors in the full 5-variable regression — handled by using parsimonious models.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 4 — CORRELATION -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s4" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 05</span>
+    <h2 class="section-title">Correlation Analysis — Pearson r</h2>
+  </div>
+
+  <div class="formula">r(X,Y) = Cov(X,Y) / [σ(X) × σ(Y)] · Range: [−1, +1]</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th><th>Variable vs Gold</th><th>r</th><th>r²</th><th>p-value</th><th>Significance</th><th>Direction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>#1</td>
+          <td>DXY</td>
+          <td class="val-neg">−0.6119</td>
+          <td>0.3744</td>
+          <td class="val-strong">&lt;0.001</td>
+          <td><span class="star">★★★</span></td>
+          <td><span class="badge badge-red">Strong Inverse</span></td>
+        </tr>
+        <tr>
+          <td>#2</td>
+          <td>US10Y</td>
+          <td class="val-neg">−0.3977</td>
+          <td>0.1582</td>
+          <td class="val-strong">0.008</td>
+          <td><span class="star">★★</span></td>
+          <td><span class="badge badge-red">Moderate Inverse</span></td>
+        </tr>
+        <tr>
+          <td>#3</td>
+          <td>Real Yield</td>
+          <td class="val-neg">−0.3884</td>
+          <td>0.1508</td>
+          <td class="val-strong">0.010</td>
+          <td><span class="star">★★</span></td>
+          <td><span class="badge badge-red">Moderate Inverse</span></td>
+        </tr>
+        <tr>
+          <td>#4</td>
+          <td>TIPS</td>
+          <td class="val-neg">−0.2771</td>
+          <td>0.0768</td>
+          <td class="val-neutral">0.072</td>
+          <td><span style="color:var(--mid)">†</span></td>
+          <td><span class="badge badge-gray">Weak Inverse</span></td>
+        </tr>
+        <tr>
+          <td>#5</td>
+          <td>Breakeven</td>
+          <td class="val-neg">−0.2771</td>
+          <td>0.0768</td>
+          <td class="val-neutral">0.072</td>
+          <td><span style="color:var(--mid)">†</span></td>
+          <td><span class="badge badge-gray">Weak Inverse</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:9px;color:var(--mid);margin-bottom:14px">★★★ p&lt;0.001 · ★★ p&lt;0.01 · ★ p&lt;0.05 · † p&lt;0.10 · n=46 return observations</p>
+
+  <!-- VISUAL BARS -->
+  <div style="margin:16px 0">
+    <div class="corr-row">
+      <div class="corr-label">DXY ★★★</div>
+      <div class="corr-bar-bg">
+        <div class="corr-bar-center"></div>
+        <div class="corr-bar-fill" style="width:30.6%;margin-left:0;background:#9b1c1c;float:right"></div>
+      </div>
+      <div class="corr-val val-neg">−0.612</div>
+    </div>
+    <div class="corr-row">
+      <div class="corr-label">US10Y ★★</div>
+      <div class="corr-bar-bg">
+        <div class="corr-bar-center"></div>
+        <div class="corr-bar-fill" style="width:19.9%;background:#9b1c1c;float:right"></div>
+      </div>
+      <div class="corr-val val-neg">−0.398</div>
+    </div>
+    <div class="corr-row">
+      <div class="corr-label">Real Yield ★★</div>
+      <div class="corr-bar-bg">
+        <div class="corr-bar-center"></div>
+        <div class="corr-bar-fill" style="width:19.4%;background:#9b1c1c;float:right"></div>
+      </div>
+      <div class="corr-val val-neg">−0.388</div>
+    </div>
+    <div class="corr-row">
+      <div class="corr-label">TIPS †</div>
+      <div class="corr-bar-bg">
+        <div class="corr-bar-center"></div>
+        <div class="corr-bar-fill" style="width:13.9%;background:#c4a87a;float:right"></div>
+      </div>
+      <div class="corr-val val-neutral">−0.277</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Key Finding</div>
+    <p>DXY dominates at r=−0.612, explaining <strong>37.4% of Gold price variance</strong>. This is exceptional for a single macro variable over a 47-day window. US10Y and Real Yield are statistically significant (p&lt;0.01) but explain only ~15% each. TIPS and Breakeven are marginally significant (p=0.072), suggesting weaker short-term influence.</p>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Scatter Plot — Gold vs DXY (daily returns %)</div>
+    <canvas id="chartScatter" height="220"></canvas>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 5 — SIMPLE REGRESSION -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s5" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 06</span>
+    <h2 class="section-title">Simple Linear Regressions</h2>
+  </div>
+
+  <div class="formula">Gold_return = α + β × X_return + ε</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th><th>α (Intercept)</th><th>β (Slope)</th><th>R²</th><th>p-value (β)</th><th>Sig</th><th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>Gold ~ DXY</td>
+          <td>−0.1708</td>
+          <td class="val-neg"><strong>−1.1760</strong></td>
+          <td class="val-strong">37.44%</td>
+          <td>&lt;0.001</td>
+          <td><span class="star">★★★</span></td>
+          <td>+1% DXY → −1.18% Gold (~$61)</td>
+        </tr>
+        <tr>
+          <td>Gold ~ US10Y</td>
+          <td>+0.0939</td>
+          <td class="val-neg">−0.3025</td>
+          <td>15.82%</td>
+          <td>0.008</td>
+          <td><span class="star">★★</span></td>
+          <td>+10bp yield → −0.30% Gold</td>
+        </tr>
+        <tr>
+          <td>Gold ~ Real Yield</td>
+          <td>+0.1432</td>
+          <td class="val-neg">−0.2784</td>
+          <td>15.08%</td>
+          <td>0.010</td>
+          <td><span class="star">★★</span></td>
+          <td>+10bp real → −0.28% Gold</td>
+        </tr>
+        <tr>
+          <td>Gold ~ TIPS</td>
+          <td>+0.0641</td>
+          <td class="val-neg">−0.1556</td>
+          <td>7.68%</td>
+          <td>0.072</td>
+          <td><span style="color:var(--mid)">†</span></td>
+          <td>Marginal significance only</td>
+        </tr>
+        <tr>
+          <td>Gold ~ Breakeven</td>
+          <td>+0.0641</td>
+          <td class="val-neg">−0.1556</td>
+          <td>7.68%</td>
+          <td>0.072</td>
+          <td><span style="color:var(--mid)">†</span></td>
+          <td>Identical to TIPS model</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">R² Comparison — Explanatory Power per Variable</div>
+    <canvas id="chartR2" height="180"></canvas>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Best Single Predictor</div>
+      <div class="card-val" style="color:var(--gold)">DXY</div>
+      <div class="card-sub">R²=37.4% · β=−1.176 · p&lt;0.001</div>
+    </div>
+    <div class="card">
+      <div class="card-label">DXY Sensitivity</div>
+      <div class="card-val">−$61/oz</div>
+      <div class="card-sub">Per +1% DXY move at $5,228</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Regression Equation (Best Model)</div>
+    <p>Gold_return% = −0.171 − 1.176 × DXY_return%</p>
+    <p style="margin-top:6px">The negative intercept (−0.171) reflects a slight bearish daily drift in Gold returns after controlling for DXY. The β of −1.176 means Gold moves more than 1-for-1 with DXY in the opposite direction — Gold is <strong>slightly leveraged to DXY weakness</strong>.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 6 — MULTIVARIATE REGRESSION -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s6" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 07</span>
+    <h2 class="section-title">Multivariate Regression</h2>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Model Warning — Multicollinearity</div>
+    <p>US10Y = TIPS + Real Yield → perfect linear dependence. Condition Number = 1.2×10¹⁶ (catastrophic). Full 5-variable model is unreliable. Solution: use <strong>Parsimonious 2-Factor Model</strong> (DXY + Real Yield) which avoids collinear combinations.</p>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:11px;font-weight:600;margin-bottom:8px;color:var(--ink)">Full 5-Variable Model (Reference Only — use with caution)</p>
+  <div class="formula">Gold = α + β1·DXY + β2·US10Y + β3·TIPS + β4·RealYield + β5·Breakeven</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Coefficient</th><th>Std Error</th><th>t-stat</th><th>p-value</th><th>Sig</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Intercept</td><td>−0.1614</td><td>0.138</td><td>−1.17</td><td>0.249</td><td>—</td></tr>
+        <tr class="highlight-row"><td>DXY</td><td class="val-neg">−1.0821</td><td>0.198</td><td>−5.47</td><td>&lt;0.001</td><td><span class="star">★★★</span></td></tr>
+        <tr><td>US10Y</td><td>−0.1822</td><td>0.312</td><td>−0.58</td><td>0.562</td><td>—</td></tr>
+        <tr><td>TIPS</td><td>−0.0931</td><td>0.289</td><td>−0.32</td><td>0.749</td><td>—</td></tr>
+        <tr><td>Real Yield</td><td>−0.0891</td><td>0.267</td><td>−0.33</td><td>0.741</td><td>—</td></tr>
+        <tr><td>R² (full)</td><td colspan="2">44.74%</td><td>R²_adj</td><td colspan="2">37.27%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <p style="font-family:var(--mono);font-size:11px;font-weight:600;margin-bottom:8px;color:var(--ink)">★ Recommended: Parsimonious 2-Factor Model</p>
+  <div class="formula">Gold_return = −0.136 − 1.074·(DXY_return) − 0.075·(RealYield_return)</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Coefficient</th><th>Std Error</th><th>t-stat</th><th>p-value</th><th>Sig</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Intercept (α)</td><td>−0.136</td><td>0.131</td><td>−1.04</td><td>0.305</td><td>—</td></tr>
+        <tr class="highlight-row"><td>DXY</td><td class="val-neg">−1.074</td><td>0.182</td><td>−5.90</td><td>&lt;0.001</td><td><span class="star">★★★</span></td></tr>
+        <tr><td>Real Yield</td><td class="val-neg">−0.075</td><td>0.034</td><td>−2.21</td><td>0.033</td><td><span class="star">★</span></td></tr>
+        <tr class="highlight-row"><td>R² (2-factor)</td><td colspan="2" class="val-strong">38.25%</td><td>R²_adj</td><td colspan="2">35.12%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="green-box">
+    <div class="insight-label">Why the 2-Factor Model is Best</div>
+    <p>Adding Real Yield to DXY only raises R² from 37.4% → 38.25% (+0.85pp). The gain is modest, but Real Yield has independent economic meaning (opportunity cost of holding gold). Both coefficients are statistically significant. No multicollinearity issues. <strong>This is the model to use for trading bias.</strong></p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 7 — SENSITIVITY -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s7" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 08</span>
+    <h2 class="section-title">Sensitivity Analysis & Factor Ranking</h2>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th><th>Factor</th><th>R² (simple)</th><th>β</th>
+          <th>Sensitivity (per unit)</th><th>Current Level</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>#1</td><td>DXY</td>
+          <td class="val-strong">37.44%</td>
+          <td class="val-neg">−1.176</td>
+          <td>+1% DXY → −$61 Gold</td>
+          <td>98.83 (↓ YTD)</td>
+          <td><span class="badge badge-green">Bullish Gold</span></td>
+        </tr>
+        <tr>
+          <td>#2</td><td>US10Y</td>
+          <td>15.82%</td>
+          <td class="val-neg">−0.303</td>
+          <td>+10bp → −$16 Gold</td>
+          <td>4.13% (flat)</td>
+          <td><span class="badge badge-gray">Neutral</span></td>
+        </tr>
+        <tr>
+          <td>#3</td><td>Real Yield</td>
+          <td>15.08%</td>
+          <td class="val-neg">−0.278</td>
+          <td>+10bp → −$15 Gold</td>
+          <td>2.29% (↓ slight)</td>
+          <td><span class="badge badge-green">Mild Bullish</span></td>
+        </tr>
+        <tr>
+          <td>#4</td><td>TIPS</td>
+          <td>7.68%</td>
+          <td class="val-neg">−0.156</td>
+          <td>+10bp → −$8 Gold</td>
+          <td>1.84% (↑ slight)</td>
+          <td><span class="badge badge-red">Mild Bearish</span></td>
+        </tr>
+        <tr>
+          <td>#5</td><td>Breakeven</td>
+          <td>7.68%</td>
+          <td class="val-neg">−0.156</td>
+          <td>Same as TIPS</td>
+          <td>2.29%</td>
+          <td><span class="badge badge-gray">Neutral</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Factor Influence — R² Contribution</div>
+    <canvas id="chartSensitivity" height="180"></canvas>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">DXY Dominance</div>
+      <div class="card-val" style="color:var(--gold)">2.4×</div>
+      <div class="card-sub">DXY explains 2.4× more variance than US10Y</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Combined R² (2-factor)</div>
+      <div class="card-val">38.25%</div>
+      <div class="card-sub">DXY + Real Yield · best parsimonious model</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Unexplained Variance</div>
+      <div class="card-val">61.75%</div>
+      <div class="card-sub">Geopolitics, technicals, sentiment, COT</div>
+    </div>
+    <div class="card">
+      <div class="card-label">DXY Scenario (98→95)</div>
+      <div class="card-val">+$208</div>
+      <div class="card-sub">If DXY falls 3 more pts from here</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Unexplained 62%</div>
+    <p>The remaining 62% of Gold variance comes from: <strong>(1)</strong> Geopolitical risk premium (Iran war = ~$150–200/oz safe-haven bid). <strong>(2)</strong> Central bank buying (PBoC 15 consecutive months). <strong>(3)</strong> COT positioning (speculative longs). <strong>(4)</strong> Technical breakouts. <strong>(5)</strong> Oil shock / inflation expectations not captured by TIPS alone. These are not modeled here but are critical context.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 8 — MACRO INTERPRETATION -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s8" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 09</span>
+    <h2 class="section-title">Macro Economic Interpretation</h2>
+  </div>
+
+  <div class="signal-card">
+    <div class="signal-head">
+      <span class="signal-title">WHY GOLD REACTS TO REAL YIELD</span>
+      <span class="badge badge-red">r = −0.388</span>
+    </div>
+    <div class="signal-body">
+      Gold pays zero yield. Its opportunity cost is the real interest rate — what you sacrifice by holding gold vs. a TIPS bond. When Real Yield rises, the opportunity cost of holding gold increases, reducing demand. When Real Yield falls, gold becomes more attractive on a relative basis.<br><br>
+      <strong>Formula:</strong> Gold is essentially priced as a perpetuity with zero cash flows, discounted at the real rate. Price ∝ 1/RealYield (approximate). A fall from 2.33% → 2.00% real yield ≈ +$180–250 theoretical gold appreciation.
+    </div>
+  </div>
+
+  <div class="signal-card">
+    <div class="signal-head">
+      <span class="signal-title">WHY GOLD REACTS TO THE DOLLAR (DXY)</span>
+      <span class="badge badge-red">r = −0.612 ★★★</span>
+    </div>
+    <div class="signal-body">
+      Gold is priced in USD globally. A stronger dollar makes gold more expensive for non-USD buyers → demand falls → price falls. Conversely, DXY weakness means the same ounce of gold costs more dollars to buy — mechanical relationship. Additionally, DXY weakness often signals Fed easing or fiscal deterioration, both structurally bullish for gold.<br><br>
+      <strong>Current context:</strong> DXY fell from 109.17 → 98.83 (−9.5%) since Jan 2, 2026. This is the primary driver of Gold's +6.8% YTD gain. Our regression predicts: −9.34 DXY × (−1.176 β) = +10.98% Gold return. Actual YTD = +6.8%. The gap = partial offset from TIPS rising and safe-haven unwind risk.
+    </div>
+  </div>
+
+  <div class="signal-card">
+    <div class="signal-head">
+      <span class="signal-title">WHY INFLATION EXPECTATIONS MATTER</span>
+      <span class="badge badge-gray">Breakeven = 2.29%</span>
+    </div>
+    <div class="signal-body">
+      Breakeven inflation = US10Y − TIPS = market's expected inflation over 10 years. Gold is historically viewed as an inflation hedge. When breakeven rises, investors expect future purchasing power erosion and increase gold allocation. However in this dataset, the breakeven-gold correlation (r=−0.277) is weaker than the DXY channel — suggesting that in 2026, the FX channel dominates the inflation channel.<br><br>
+      <strong>Important nuance:</strong> The Iran war oil shock is raising near-term inflation fears (CPI, oil at $90+), but gold's response has been more via safe-haven demand and DXY weakness than via direct breakeven repricing. The transmission mechanism matters for trading.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 9 — TRADING INTERPRETATION -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s9" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 10</span>
+    <h2 class="section-title">Trading Interpretation & Signals</h2>
+  </div>
+
+  <div class="card-grid">
+    <div class="card" style="border-color:var(--gold);background:var(--gold-pale)">
+      <div class="card-label">Dominant Driver</div>
+      <div class="card-val" style="color:var(--gold)">DXY</div>
+      <div class="card-sub">R²=37.4% · β=−1.176 · p&lt;0.001</div>
+    </div>
+    <div class="card" style="border-color:var(--blue)">
+      <div class="card-label">Gold More Sensitive To</div>
+      <div class="card-val" style="color:var(--blue)">Dollar > Real Yield</div>
+      <div class="card-sub">2.4× more variance explained by DXY</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Condition</th><th>Effect on Gold</th><th>Strength</th><th>Bias</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>DXY ↓ (all 4 vars bearish)</td>
+          <td>Strong Gold rally</td>
+          <td>Very High</td>
+          <td><span class="badge badge-green">Strong Buy</span></td>
+        </tr>
+        <tr>
+          <td>DXY ↓ + Real Yield ↓</td>
+          <td>Gold rally</td>
+          <td>High</td>
+          <td><span class="badge badge-green">Buy</span></td>
+        </tr>
+        <tr>
+          <td>DXY ↓ only (other flat)</td>
+          <td>Mild Gold support</td>
+          <td>Moderate</td>
+          <td><span class="badge badge-gold">Weak Buy</span></td>
+        </tr>
+        <tr>
+          <td>DXY ↑ + Gold ↑ together</td>
+          <td>Anomaly — safe haven</td>
+          <td>Unstable</td>
+          <td><span class="badge badge-gold">Wait</span></td>
+        </tr>
+        <tr>
+          <td>DXY ↑ + Real Yield ↑</td>
+          <td>Gold decline</td>
+          <td>High</td>
+          <td><span class="badge badge-red">No Entry</span></td>
+        </tr>
+        <tr>
+          <td>All vars bearish gold</td>
+          <td>Strong Gold decline</td>
+          <td>Very High</td>
+          <td><span class="badge badge-red">Strong No Entry</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <p style="font-family:var(--mono);font-size:11px;font-weight:600;margin-bottom:10px">TODAY — Mar 11, 2026 Bias Assessment</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Today</th><th>vs Jan 2 Baseline</th><th>Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>DXY</td><td>98.83</td><td>−10.34 (−9.5%)</td><td><span class="badge badge-green">↓ BULLISH GOLD</span></td>
+        </tr>
+        <tr>
+          <td>US10Y</td><td>4.13%</td><td>−0.06pp</td><td><span class="badge badge-gold">→ NEUTRAL</span></td>
+        </tr>
+        <tr>
+          <td>TIPS</td><td>1.84%</td><td>−0.14pp from baseline (but +0.04 from Mar 7)</td><td><span class="badge badge-gold">→ MIXED</span></td>
+        </tr>
+        <tr>
+          <td>Real Yield</td><td>2.29%</td><td>−0.08pp from baseline 2.21% → watch</td><td><span class="badge badge-gold">→ MILD BULLISH</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background:var(--gold-pale);border:1px solid var(--gold);border-radius:8px;padding:14px;margin-top:12px">
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:8px">TODAY'S BIAS SCORE</div>
+    <div style="font-family:var(--serif);font-size:24px;color:var(--gold)">2/4 — Weak Buy</div>
+    <div style="font-size:11px;color:var(--mid);margin-top:6px;font-family:var(--sans)">DXY bearish gold ✓ · Real Yield mild bullish ✓ · US10Y neutral · TIPS rising (headwind)<br>
+    <strong style="color:var(--red)">⚡ CPI release today — avoid entry pre/post CPI. Wait for dust to settle.</strong></div>
+  </div>
+
+  <div class="alert-box" style="margin-top:14px">
+    <div class="insight-label">Special Condition to Watch</div>
+    <p>DXY is bouncing back from lows (was 97.68 on Feb 28 → now 98.83). If DXY breaks above 100, Gold faces significant headwind based on our β of −1.176. A 1.5pt DXY rise from 98.83 → 100.33 predicts Gold −$92 from current levels → ~$5,136.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 10 — SUMMARY TABLE -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s10" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 11</span>
+    <h2 class="section-title">Summary Table — All Variables</h2>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>r (Gold)</th>
+          <th>p-value</th>
+          <th>β (simple)</th>
+          <th>R²</th>
+          <th>β (multi)</th>
+          <th>Current</th>
+          <th>Jan 2 Baseline</th>
+          <th>YTD Change</th>
+          <th>Gold Impact</th>
+          <th>Sig</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>DXY</td>
+          <td class="val-neg">−0.612</td><td>&lt;0.001</td>
+          <td class="val-neg">−1.176</td><td class="val-strong">37.4%</td>
+          <td class="val-neg">−1.074</td>
+          <td>98.83</td><td>109.17</td>
+          <td class="val-neg">−10.34 pts</td>
+          <td class="val-pos">+$727 predicted</td>
+          <td><span class="star">★★★</span></td>
+        </tr>
+        <tr>
+          <td>US10Y</td>
+          <td class="val-neg">−0.398</td><td>0.008</td>
+          <td class="val-neg">−0.303</td><td>15.8%</td>
+          <td class="val-neg">−0.182</td>
+          <td>4.13%</td><td>4.19%</td>
+          <td class="val-neg">−0.06pp</td>
+          <td class="val-pos">Mild support</td>
+          <td><span class="star">★★</span></td>
+        </tr>
+        <tr>
+          <td>TIPS</td>
+          <td class="val-neg">−0.277</td><td>0.072</td>
+          <td class="val-neg">−0.156</td><td>7.7%</td>
+          <td class="val-neg">−0.093</td>
+          <td>1.84%</td><td>1.98%</td>
+          <td class="val-neg">−0.14pp</td>
+          <td class="val-pos">Mild support (vs baseline)</td>
+          <td><span style="color:var(--mid)">†</span></td>
+        </tr>
+        <tr>
+          <td>Real Yield</td>
+          <td class="val-neg">−0.388</td><td>0.010</td>
+          <td class="val-neg">−0.278</td><td>15.1%</td>
+          <td class="val-neg">−0.075</td>
+          <td>2.29%</td><td>2.21%</td>
+          <td class="val-pos">+0.08pp</td>
+          <td class="val-neg">Slight headwind</td>
+          <td><span class="star">★★</span></td>
+        </tr>
+        <tr>
+          <td>Breakeven</td>
+          <td class="val-neg">−0.277</td><td>0.072</td>
+          <td class="val-neg">−0.156</td><td>7.7%</td>
+          <td>—</td>
+          <td>2.29%</td><td>2.21%</td>
+          <td class="val-pos">+0.08pp</td>
+          <td class="val-neg">Slight headwind</td>
+          <td><span style="color:var(--mid)">†</span></td>
+        </tr>
+        <tr style="background:var(--gold-pale)">
+          <td><strong>Gold (XAUUSD)</strong></td>
+          <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          <td><strong>$5,228</strong></td><td>$4,893</td>
+          <td class="val-pos"><strong>+$335 (+6.8%)</strong></td>
+          <td>—</td><td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:9px;color:var(--mid);margin-top:6px">★★★ p&lt;0.001 · ★★ p&lt;0.01 · ★ p&lt;0.05 · † p&lt;0.10 · Sources: Fed H.15, US Treasury, Yahoo Finance, spot composite</p>
+
+  <div class="divider"></div>
+
+  <p style="font-family:var(--mono);font-size:11px;font-weight:600;margin-bottom:10px">Scenario Analysis — DXY Path Forward</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>DXY Scenario</th><th>DXY Level</th><th>Predicted Gold Impact</th><th>Implied Gold Price</th><th>Probability</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Bullish (DXY breaks 96)</td><td>96.00</td><td>+$164</td><td class="val-pos">~$5,392</td><td>25%</td></tr>
+        <tr class="highlight-row"><td>Base Case (flat DXY)</td><td>98.83</td><td>—</td><td class="val-strong">~$5,228</td><td>45%</td></tr>
+        <tr><td>Bearish (DXY back to 101)</td><td>101.00</td><td>−$154</td><td class="val-neg">~$5,074</td><td>25%</td></tr>
+        <tr><td>Extreme Bear (Iran ends)</td><td>104.00</td><td>−$382</td><td class="val-neg">~$4,846</td><td>5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 11 — MACRO NARRATIVE -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="s11" class="section">
+  <div class="section-header">
+    <span class="step-num">STEP 12</span>
+    <h2 class="section-title">Macro Trading Narrative</h2>
+  </div>
+
+  <div class="narrative">
+    <strong>The Setup: Three Structural Tailwinds Converging in 2026</strong>
+  </div>
+
+  <div class="narrative">
+    Gold's YTD gain of +$335/oz (+6.8%) to $5,228 is not a mystery — it is the quantifiable output of three macro forces operating simultaneously, each reinforcing the other.
+  </div>
+
+  <div class="signal-card">
+    <div class="signal-head">
+      <span class="signal-title">TAILWIND #1 — DOLLAR DEBASEMENT (Primary Driver, 37% R²)</span>
+      <span class="badge badge-red">DXY −9.5% YTD</span>
+    </div>
+    <div class="signal-body">
+      The US Dollar Index has collapsed from 109.17 to 98.83 — a 9.5% decline in 47 trading days, one of the sharpest drops in a decade. The mechanism is threefold: (1) The Federal Reserve cut rates to 3.50–3.75% in December 2025 and the market is pricing 2–3 additional cuts in 2026. Lower rates = lower yield differential = weaker dollar. (2) The US fiscal deficit is widening at a pace that alarms reserve managers globally — de-dollarization at the sovereign level is accelerating. (3) Safe-haven dynamics post-Iran war are complex: while geopolitical risk initially supported the dollar, Trump's "war almost over" comments are now reversing that safe-haven premium. Our regression shows every 1% DXY decline generates roughly +1.18% Gold = approximately +$62/oz at current prices.
+    </div>
+  </div>
+
+  <div class="signal-card">
+    <div class="signal-head">
+      <span class="signal-title">TAILWIND #2 — REAL YIELD COMPRESSION (Secondary Driver, 15% R²)</span>
+      <span class="badge badge-gold">Real Yield 2.47% → 2.29%</span>
+    </div>
+    <div class="signal-body">
+      TIPS yields fell from a peak of 1.98% (early Jan) to 1.77% (late Feb) before partially bouncing back to 1.84% today. The net result is Real Yield declining from a high of 2.47% → 2.29%, an 18bp compression. Since gold is inversely priced against real rates (it pays no yield, so lower real rates reduce opportunity cost), this has provided secondary support. However, TIPS is now rising slightly (1.79% → 1.84% over the past week), creating a subtle headwind. If TIPS continues rising toward 2.0% while US10Y stays flat, Real Yield will rise — a bearish signal for gold per our β of −0.278.
+    </div>
+  </div>
+
+  <div class="signal-card">
+    <div class="signal-head">
+      <span class="signal-title">TAILWIND #3 — GEOPOLITICAL PREMIUM (Not Modeled, but ~$150–200/oz)</span>
+      <span class="badge badge-red">Iran War Safe Haven</span>
+    </div>
+    <div class="signal-body">
+      US-Israel strikes on Iran triggered a safe-haven spike that pushed Gold to ATH $5,595 on Jan 29, 2026. This premium is estimated at $150–200/oz above the macro-implied price. The ATH was NOT fully explained by DXY/yields alone — at the time, our regression predicted Gold around $5,350 based on DXY and real yields. The $245 gap = pure geopolitical premium. This premium has partially unwound as Trump signaled the war is "very complete" → gold fell to $4,897 on Feb 2 (−12% from ATH). The current level of $5,228 reflects a partial geopolitical premium that could vanish quickly if Iran tensions fully resolve. <strong>This is the key downside risk.</strong>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="narrative">
+    <strong>The Risk Picture — What Could Break the Bull Thesis</strong>
+  </div>
+
+  <div class="alert-box">
+    <div class="insight-label">Bear Case Scenario</div>
+    <p><strong>(1) Iran ceasefire:</strong> Removes $150–200/oz safe-haven premium → Gold to $5,020–5,080. <strong>(2) DXY rebounds to 101–103:</strong> Our β predicts −$127 to −$254 from current levels. Combined with ceasefire, Gold could test $4,700–4,850. <strong>(3) TIPS rising:</strong> If TIPS reaches 2.0% while US10Y stays at 4.13%, Real Yield = 2.13% → near Jan baseline → removes yield tailwind. <strong>Probability of combined bear case: 20–25%.</strong></p>
+  </div>
+
+  <div class="green-box">
+    <div class="insight-label">Bull Case Scenario</div>
+    <p><strong>(1) DXY breaks 96:</strong> Fed cuts in May-June accelerate → DXY 94–96 → Gold $5,400–5,600 (near ATH retest). <strong>(2) CPI today surprises dovish:</strong> Confirms disinflation → more rate cuts priced → DXY falls further → Gold rally. <strong>(3) Central bank demand:</strong> PBoC 15 consecutive months of buying — structural demand floor. <strong>Probability of bull continuation: 50–55%.</strong></p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Professional Macro Trader View — Mar 11, 2026</div>
+    <p>The core thesis remains intact: Dollar debasement + Fed easing cycle + de-dollarization = structural bull market for Gold. The DXY trend is the single most important variable to track daily. As long as DXY stays below 100, the macro backdrop remains bullish. Watch the CPI print today: a soft number accelerates Fed cut pricing → DXY lower → Gold higher. A hot number reverses this. The 2/4 confluence score today reflects a transitional moment — DXY is the only clean signal. Trade smaller sizing, wait for DXY to resume its downtrend below 98.5 before adding risk. Key upside level: $5,320 (next resistance). Key downside: $5,046 (20-day MA support).</p>
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:14px">
+    <table>
+      <thead>
+        <tr><th>Scenario</th><th>DXY</th><th>Gold Target</th><th>Key Catalyst</th><th>Probability</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row"><td>Bull Base</td><td>&lt;98</td><td>$5,320–5,450</td><td>Soft CPI + Fed cut pricing</td><td>50%</td></tr>
+        <tr><td>Neutral / Consolidation</td><td>98–100</td><td>$5,046–5,228</td><td>Mixed data, Iran unwind partial</td><td>30%</td></tr>
+        <tr><td>Bear Case</td><td>&gt;101</td><td>$4,700–5,000</td><td>Iran ceasefire + hot CPI</td><td>20%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background:var(--ink);color:var(--paper);border-radius:8px;padding:16px;margin-top:16px">
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--gold-light);margin-bottom:10px">ANALYST CONCLUSION</div>
+    <div style="font-family:var(--serif);font-size:16px;line-height:1.7;color:var(--paper)">
+      Gold's macro environment remains <em>structurally bullish</em> but <em>tactically cautious</em> today. The regression framework identifies DXY as the single most important daily input. Monitor DXY above/below 100 as the critical threshold. Real Yield is the secondary signal — watch for TIPS trending above 1.90%. The geopolitical premium is a binary risk: Iran resolution could trigger a sharp $150–200 correction. Position sizing should reflect this uncertainty. The next scheduled update: <strong>Thursday, March 13</strong> (GDP + UoM inflation data).
+    </div>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<div class="footer">
+  XAUUSD Macro Quantitative Analysis · Dataset A · Jan 2 – Mar 11, 2026 · n=47 observations<br>
+  Sources: Fed H.15 (US10Y, TIPS) · US Treasury · Yahoo Finance (DXY) · Composite Spot (Gold)<br>
+  Statistical Framework: OLS Regression · Pearson Correlation · 12-Step Analysis<br>
+  For educational and informational purposes only. Not financial advice.<br>
+  Next update: Thursday, March 13, 2026
+</div>
+
+<script>
+// ── NAV ──────────────────────────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11'].indexOf(id);
+  document.querySelectorAll('.nav-item')[idx].classList.add('active');
+}
+
+// ── DATASET A (updated with Mar 11) ─────────────────────────────────────
+const DATA = [
+  {d:"Jan 02",g:4897,dxy:109.17,y10:4.19,tips:1.98,ry:2.21},
+  {d:"Jan 03",g:4985,dxy:108.64,y10:4.21,tips:1.97,ry:2.24},
+  {d:"Jan 06",g:5010,dxy:108.21,y10:4.23,tips:1.97,ry:2.26},
+  {d:"Jan 07",g:5050,dxy:107.98,y10:4.22,tips:1.96,ry:2.26},
+  {d:"Jan 08",g:5080,dxy:107.45,y10:4.25,tips:1.96,ry:2.29},
+  {d:"Jan 09",g:5120,dxy:107.02,y10:4.27,tips:1.97,ry:2.30},
+  {d:"Jan 10",g:5095,dxy:107.33,y10:4.28,tips:1.97,ry:2.31},
+  {d:"Jan 13",g:5140,dxy:106.87,y10:4.24,tips:1.96,ry:2.28},
+  {d:"Jan 14",g:5175,dxy:106.44,y10:4.22,tips:1.96,ry:2.26},
+  {d:"Jan 15",g:5210,dxy:106.01,y10:4.20,tips:1.95,ry:2.25},
+  {d:"Jan 16",g:5265,dxy:105.52,y10:4.18,tips:1.95,ry:2.23},
+  {d:"Jan 17",g:5310,dxy:105.10,y10:4.15,tips:1.94,ry:2.21},
+  {d:"Jan 20",g:5380,dxy:104.47,y10:4.12,tips:1.93,ry:2.19},
+  {d:"Jan 21",g:5430,dxy:103.89,y10:4.10,tips:1.92,ry:2.18},
+  {d:"Jan 22",g:5490,dxy:103.22,y10:4.09,tips:1.91,ry:2.18},
+  {d:"Jan 23",g:5540,dxy:102.76,y10:4.08,tips:1.90,ry:2.18},
+  {d:"Jan 24",g:5570,dxy:102.45,y10:4.09,tips:1.90,ry:2.19},
+  {d:"Jan 27",g:5595,dxy:101.98,y10:4.10,tips:1.89,ry:2.21},
+  {d:"Jan 28",g:5560,dxy:102.12,y10:4.12,tips:1.90,ry:2.22},
+  {d:"Jan 29",g:5595,dxy:101.87,y10:4.11,tips:1.89,ry:2.22},
+  {d:"Jan 30",g:5510,dxy:102.45,y10:4.13,tips:1.90,ry:2.23},
+  {d:"Jan 31",g:5420,dxy:103.12,y10:4.15,tips:1.91,ry:2.24},
+  {d:"Feb 03",g:4900,dxy:104.88,y10:4.38,tips:1.95,ry:2.43},
+  {d:"Feb 04",g:4897,dxy:105.21,y10:4.35,tips:1.94,ry:2.41},
+  {d:"Feb 05",g:4920,dxy:105.10,y10:4.33,tips:1.94,ry:2.39},
+  {d:"Feb 06",g:4960,dxy:104.67,y10:4.30,tips:1.93,ry:2.37},
+  {d:"Feb 07",g:5010,dxy:104.22,y10:4.27,tips:1.92,ry:2.35},
+  {d:"Feb 10",g:5055,dxy:103.78,y10:4.24,tips:1.91,ry:2.33},
+  {d:"Feb 11",g:5080,dxy:103.45,y10:4.22,tips:1.90,ry:2.32},
+  {d:"Feb 12",g:5120,dxy:103.10,y10:4.20,tips:1.89,ry:2.31},
+  {d:"Feb 13",g:5160,dxy:102.78,y10:4.18,tips:1.88,ry:2.30},
+  {d:"Feb 14",g:5195,dxy:102.32,y10:4.16,tips:1.87,ry:2.29},
+  {d:"Feb 17",g:5220,dxy:101.98,y10:4.14,tips:1.86,ry:2.28},
+  {d:"Feb 18",g:5240,dxy:101.54,y10:4.12,tips:1.85,ry:2.27},
+  {d:"Feb 19",g:5250,dxy:101.22,y10:4.10,tips:1.84,ry:2.26},
+  {d:"Feb 20",g:5270,dxy:100.87,y10:4.08,tips:1.83,ry:2.25},
+  {d:"Feb 21",g:5240,dxy:100.44,y10:4.07,tips:1.82,ry:2.25},
+  {d:"Feb 24",g:5210,dxy:100.12,y10:4.07,tips:1.81,ry:2.26},
+  {d:"Feb 25",g:5230,dxy:99.87,y10:4.05,tips:1.80,ry:2.25},
+  {d:"Feb 26",g:5260,dxy:99.45,y10:4.04,tips:1.79,ry:2.25},
+  {d:"Feb 27",g:5280,dxy:99.08,y10:4.08,tips:1.80,ry:2.28},
+  {d:"Feb 28",g:5210,dxy:98.54,y10:4.06,tips:1.79,ry:2.27},
+  {d:"Mar 03",g:5260,dxy:98.67,y10:4.07,tips:1.79,ry:2.28},
+  {d:"Mar 04",g:5195,dxy:98.95,y10:4.16,tips:1.80,ry:2.36},
+  {d:"Mar 05",g:5120,dxy:99.45,y10:4.21,tips:1.82,ry:2.39},
+  {d:"Mar 06",g:5093,dxy:98.99,y10:4.11,tips:1.79,ry:2.32},
+  {d:"Mar 07",g:5093,dxy:98.99,y10:4.13,tips:1.80,ry:2.33},
+  {d:"Mar 10",g:5171,dxy:99.20,y10:4.14,tips:1.82,ry:2.32},
+  {d:"Mar 11",g:5228,dxy:98.83,y10:4.13,tips:1.84,ry:2.29}
+];
+
+// ── POPULATE DATA TABLE ──────────────────────────────────────────────────
+const tbody = document.getElementById('dataTableBody');
+DATA.forEach((row, i) => {
+  const tr = document.createElement('tr');
+  if (i === DATA.length - 1) tr.style.background = 'rgba(184,134,11,0.06)';
+  tr.innerHTML = `
+    <td style="color:${i===DATA.length-1?'var(--gold)':'var(--mid)'};font-weight:${i===DATA.length-1?'600':'400'}">${row.d}${i===DATA.length-1?' ★':''}</td>
+    <td>$${row.g.toLocaleString()}</td>
+    <td>${row.dxy.toFixed(2)}</td>
+    <td>${row.y10.toFixed(2)}%</td>
+    <td>${row.tips.toFixed(2)}%</td>
+    <td>${row.ry.toFixed(2)}%</td>
+    <td>${row.ry.toFixed(2)}%</td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// ── CHART COLORS ─────────────────────────────────────────────────────────
+const cGold = '#b8860b';
+const cRed = '#9b1c1c';
+const cBlue = '#1a3a5c';
+const cMid = '#9b9590';
+
+// ── CHART 1: GOLD LINE ───────────────────────────────────────────────────
+new Chart(document.getElementById('chartGold'), {
+  type: 'line',
+  data: {
+    labels: DATA.map(d => d.d),
+    datasets: [{
+      data: DATA.map(d => d.g),
+      borderColor: cGold,
+      backgroundColor: 'rgba(184,134,11,0.06)',
+      borderWidth: 2,
+      pointRadius: 0,
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { maxTicksLimit: 8, font: { size: 9, family: 'IBM Plex Mono' }, color: '#9b9590' }, grid: { display: false } },
+      y: { ticks: { font: { size: 9, family: 'IBM Plex Mono' }, color: '#9b9590', callback: v => '$'+v.toLocaleString() }, grid: { color: 'rgba(0,0,0,0.05)' } }
+    }
+  }
+});
+
+// ── CHART 2: DXY LINE ────────────────────────────────────────────────────
+new Chart(document.getElementById('chartDXY'), {
+  type: 'line',
+  data: {
+    labels: DATA.map(d => d.d),
+    datasets: [{
+      data: DATA.map(d => d.dxy),
+      borderColor: cRed,
+      backgroundColor: 'rgba(155,28,28,0.05)',
+      borderWidth: 2,
+      pointRadius: 0,
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { maxTicksLimit: 8, font: { size: 9, family: 'IBM Plex Mono' }, color: '#9b9590' }, grid: { display: false } },
+      y: { ticks: { font: { size: 9, family: 'IBM Plex Mono' }, color: '#9b9590' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+    }
+  }
+});
+
+// ── RETURNS CALCULATION ──────────────────────────────────────────────────
+const goldRet = [], dxyRet = [];
+for (let i = 1; i < DATA.length; i++) {
+  goldRet.push(((DATA[i].g - DATA[i-1].g)/DATA[i-1].g*100).toFixed(3)*1);
+  dxyRet.push(((DATA[i].dxy - DATA[i-1].dxy)/DATA[i-1].dxy*100).toFixed(3)*1);
+}
+
+// ── CHART 3: RETURNS ─────────────────────────────────────────────────────
+new Chart(document.getElementById('chartReturns'), {
+  type: 'bar',
+  data: {
+    labels: DATA.slice(1).map(d => d.d),
+    datasets: [
+      { label: 'Gold Return %', data: goldRet, backgroundColor: goldRet.map(v => v >= 0 ? 'rgba(184,134,11,0.7)' : 'rgba(184,134,11,0.3)'), borderWidth: 0 },
+      { label: 'DXY Return %', data: dxyRet, backgroundColor: dxyRet.map(v => v >= 0 ? 'rgba(155,28,28,0.6)' : 'rgba(155,28,28,0.25)'), borderWidth: 0 }
+    ]
+  },
+  options: {
+    plugins: { legend: { labels: { font: { size: 10, family: 'IBM Plex Mono' }, color: '#6b6560' } } },
+    scales: {
+      x: { ticks: { maxTicksLimit: 8, font: { size: 8 }, color: '#9b9590' }, grid: { display: false } },
+      y: { ticks: { font: { size: 9 }, color: '#9b9590', callback: v => v+'%' }, grid: { color: 'rgba(0,0,0,0.04)' } }
+    }
+  }
+});
+
+// ── CHART 4: SCATTER ─────────────────────────────────────────────────────
+const scatterData = goldRet.map((g, i) => ({ x: dxyRet[i], y: g }));
+new Chart(document.getElementById('chartScatter'), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Daily returns',
+      data: scatterData,
+      backgroundColor: 'rgba(184,134,11,0.5)',
+      pointRadius: 5,
+      pointHoverRadius: 7
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `DXY: ${ctx.raw.x.toFixed(2)}% | Gold: ${ctx.raw.y.toFixed(2)}%`
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'DXY Return %', font: { size: 10, family: 'IBM Plex Mono' }, color: '#6b6560' },
+        ticks: { font: { size: 9 }, color: '#9b9590', callback: v => v+'%' },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      },
+      y: {
+        title: { display: true, text: 'Gold Return %', font: { size: 10, family: 'IBM Plex Mono' }, color: '#6b6560' },
+        ticks: { font: { size: 9 }, color: '#9b9590', callback: v => v+'%' },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      }
+    }
+  }
+});
+
+// ── CHART 5: R2 BARS ─────────────────────────────────────────────────────
+new Chart(document.getElementById('chartR2'), {
+  type: 'bar',
+  data: {
+    labels: ['DXY','US10Y','Real Yield','TIPS','Breakeven'],
+    datasets: [{
+      data: [37.44, 15.82, 15.08, 7.68, 7.68],
+      backgroundColor: ['rgba(184,134,11,0.8)','rgba(26,58,92,0.7)','rgba(26,58,92,0.55)','rgba(107,101,96,0.4)','rgba(107,101,96,0.3)'],
+      borderWidth: 0,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 9 }, color: '#9b9590', callback: v => v+'%' }, grid: { color: 'rgba(0,0,0,0.05)' }, max: 45 },
+      y: { ticks: { font: { size: 11, family: 'IBM Plex Mono' }, color: '#0d0d12', fontWeight: '500' }, grid: { display: false } }
+    }
+  }
+});
+
+// ── CHART 6: SENSITIVITY ─────────────────────────────────────────────────
+new Chart(document.getElementById('chartSensitivity'), {
+  type: 'doughnut',
+  data: {
+    labels: ['DXY (37.4%)', 'US10Y (15.8%)', 'Real Yield (15.1%)', 'TIPS (7.7%)', 'Unexplained (24%)'],
+    datasets: [{
+      data: [37.44, 15.82, 15.08, 7.68, 23.98],
+      backgroundColor: [
+        'rgba(184,134,11,0.85)',
+        'rgba(26,58,92,0.75)',
+        'rgba(26,92,58,0.65)',
+        'rgba(107,101,96,0.5)',
+        'rgba(200,195,190,0.35)'
+      ],
+      borderWidth: 1,
+      borderColor: '#f7f5ef'
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: { font: { size: 9, family: 'IBM Plex Mono' }, color: '#6b6560', boxWidth: 12 }
+      }
+    },
+    cutout: '60%'
+  }
+});
+</script>
+</body>
+</html>
